@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Promise animation</title>
+
+    <style>
+        .ball{
+            width:40px;
+            height:40px;
+            border-radius: 20px;
+        }
+        .ball1{
+            background: red;
+        }
+        .ball2{
+            background: yellow;
+        }
+        .ball3{
+            background: green;
+        }
+    </style>
+</head>
+<body>
+<div class="ball ball1" style="margin-left: 0;"></div>
+<div class="ball ball2" style="margin-left: 0;"></div>
+<div class="ball ball3" style="margin-left: 0;"></div>
+
+<script>
+    var ball1 = document.querySelector('.ball1');
+    var ball2 = document.querySelector('.ball2');
+    var ball3 = document.querySelector('.ball3');
+
+    var Promise = window.Promise;
+
+    function promiseAnimate(ball,distance) {
+        return new Promise(function (resolve,reject) {
+            function _animate() {
+                setTimeout(function () {
+                    var marginleft = parseInt(ball.style.marginLeft,10);
+
+                    if (marginleft == distance) {
+                        resolve;
+                    }
+                    else {
+                        if(marginleft < distance){
+                            marginleft++;
+                        }
+                        else{
+                            marginleft--;
+                        }
+                        ball.style.marginLeft = marginleft + 'px';
+                        _animate();
+                    }
+                },13)
+            }
+        });
+    }
+
+    promiseAnimate(ball1,100)
+        .then(function () {
+            return promiseAnimate(ball2,100);
+        })
+        .then(function () {
+            return promiseAnimate(ball3,300)
+        })
+        .then(function () {
+            return promiseAnimate(ball3,150);
+        })
+        .then(function () {
+            return promiseAnimate(ball2,150)
+        })
+        .then(function () {
+            return promiseAnimate(ball1,150);
+        });
+
+</script>
+</body>
+</html>
