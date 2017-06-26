@@ -13,7 +13,7 @@ function filterChapters(html) {
         var videos = chapter.find('.video').children('li');
         var chapterData = {
             chapterTitle : chapterTitle,
-            video:[]
+            videos:[]
         };
         
         videos.each(function (item) {
@@ -37,7 +37,9 @@ function printCourseInfo(courseData) {
         var chapterTitle = item.chapterTitle;
         console.log(chapterTitle + '\n');
 
-        item.videos.forEach(' 【' + video.id + '】 ' + '\n');
+        item.videos.forEach(function(video){
+            console.log('【'+video.id + '】'+ video.title +'\n');
+        })
     });
 }
 
